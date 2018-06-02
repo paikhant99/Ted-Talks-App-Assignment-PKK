@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginBottom="@dimen/margin_medium">
+
+    <ImageView
+        android:id="@+id/iv_ted_news_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/iv_background"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/tv_ted_talk_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elon Musk"
+        android:textColor="@color/texts"
+        android:layout_above="@id/tv_ted_talk_title"
+        android:layout_alignLeft="@id/tv_ted_talk_title" />
+
+    <TextView
+        android:id="@+id/tv_ted_talk_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_medium_2"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:maxWidth="300dp"
+        android:text="The future we are building -- and boring"
+        android:textColor="@color/texts"
+        android:textSize="@dimen/text_regular_3x" />
+
+    <ImageView
+        android:id="@+id/iv_ted_news_generic_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more"
+        android:layout_above="@id/tv_ted_talk_time"
+        android:layout_alignLeft="@id/tv_ted_talk_time" />
+
+    <TextView
+        android:id="@+id/tv_ted_talk_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:10"
+        android:textColor="@color/texts"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/margin_medium_2"
+        android:layout_marginRight="@dimen/margin_medium" />
+</RelativeLayout>
