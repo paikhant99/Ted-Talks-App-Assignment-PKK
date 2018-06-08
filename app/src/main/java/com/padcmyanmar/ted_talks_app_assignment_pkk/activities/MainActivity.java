@@ -1,5 +1,6 @@
-package com.padcmyanmar.ted_talks_app_assignment_pkk;
+package com.padcmyanmar.ted_talks_app_assignment_pkk.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,19 +12,21 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.padcmyanmar.ted_talks_app_assignment_pkk.R;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.adapters.TedNewsAdapter;
+import com.padcmyanmar.ted_talks_app_assignment_pkk.delegates.TedNewsDelegate;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TedNewsDelegate{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         RecyclerView rvTedNews=(RecyclerView)findViewById(R.id.rv_ted_news);
-        TedNewsAdapter adapter=new TedNewsAdapter();
+        TedNewsAdapter adapter=new TedNewsAdapter(this);
         rvTedNews.setAdapter(adapter);
         rvTedNews.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
 
@@ -58,5 +61,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTapTedTalks() {
+        Intent intent=new Intent(getApplicationContext(),TedNewsDetailActivity.class);
+        startActivity(intent);
     }
 }
