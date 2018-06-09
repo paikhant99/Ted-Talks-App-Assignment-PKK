@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="6"
+    android:layout_marginTop="@dimen/margin_medium"
+    android:layout_marginRight="@dimen/margin_medium">
+    <ImageView
+        android:id="@+id/iv_ted_news_video"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/iv_background"
+        android:scaleType="centerCrop"
+        android:layout_weight="2"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_marginRight="@dimen/margin_medium">
+        <TextView
+            android:id="@+id/tv_ted_news_speaker_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Elon Musk"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/text_regular_2x"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_regular_2x"
+            android:text="The mind behind Tesla,SpaceX,SolarCity"
+            android:layout_alignLeft="@id/tv_ted_news_speaker_name"
+            android:layout_below="@id/tv_ted_news_speaker_name"/>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="@dimen/more_size"
+        android:layout_height="@dimen/more_size"
+        android:src="@drawable/ic_more_black"
+        android:layout_weight="1"
+        android:layout_marginRight="@dimen/margin_medium"/>
+</LinearLayout>
