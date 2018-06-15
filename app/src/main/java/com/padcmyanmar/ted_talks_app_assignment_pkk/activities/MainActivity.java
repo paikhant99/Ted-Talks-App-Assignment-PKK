@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.padcmyanmar.ted_talks_app_assignment_pkk.R;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.adapters.TedNewsAdapter;
+import com.padcmyanmar.ted_talks_app_assignment_pkk.data.models.TedTalksModel;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.delegates.TedNewsDelegate;
 
 public class MainActivity extends AppCompatActivity implements TedNewsDelegate{
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements TedNewsDelegate{
                         .setAction("Action", null).show();
             }
         });
+
+        TedTalksModel.getMtalksInstance().loadTalksList();
     }
 
     @Override
