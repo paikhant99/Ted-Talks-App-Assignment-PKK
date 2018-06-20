@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,24 +16,32 @@ import android.view.MenuItem;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.R;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.adapters.TedNewsAdapter;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.data.models.TedTalksModel;
+import com.padcmyanmar.ted_talks_app_assignment_pkk.data.vos.TedTalksVO;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.delegates.TedNewsDelegate;
+import com.padcmyanmar.ted_talks_app_assignment_pkk.events.SuccessGetTedTalksEvent;
 
-public class MainActivity extends AppCompatActivity implements TedNewsDelegate{
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+public class MainActivity extends BaseActivity implements TedNewsDelegate{
+
+    TedNewsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar toolbar =  findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView rvTedNews=(RecyclerView)findViewById(R.id.rv_ted_news);
-        TedNewsAdapter adapter=new TedNewsAdapter(this);
+        RecyclerView rvTedNews=findViewById(R.id.rv_ted_news);
+        adapter=new TedNewsAdapter(this);
         rvTedNews.setAdapter(adapter);
         rvTedNews.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +51,18 @@ public class MainActivity extends AppCompatActivity implements TedNewsDelegate{
         });
 
         TedTalksModel.getMtalksInstance().loadTalksList();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -67,8 +88,14 @@ public class MainActivity extends AppCompatActivity implements TedNewsDelegate{
     }
 
     @Override
-    public void onTapTedTalks() {
+    public void onTapTedTalks(TedTalksVO tedTalks) {
         Intent intent=new Intent(getApplicationContext(),TedNewsDetailActivity.class);
+        intent.putExtra("TalkId",String.valueOf(tedTalks.getTalkId()));
         startActivity(intent);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSuccessGetTedTalks(SuccessGetTedTalksEvent event){
+        adapter.setTedTalksList(event.getTalksList());
     }
 }
