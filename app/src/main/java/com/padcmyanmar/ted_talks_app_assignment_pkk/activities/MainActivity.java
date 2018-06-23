@@ -19,12 +19,25 @@ import com.padcmyanmar.ted_talks_app_assignment_pkk.data.models.TedTalksModel;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.data.vos.TedTalksVO;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.delegates.TedNewsDelegate;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.events.SuccessGetTedTalksEvent;
+import com.padcmyanmar.ted_talks_app_assignment_pkk.utils.TedTalksConstants;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends BaseActivity implements TedNewsDelegate{
+
+    @BindView(R.id.main_toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.rv_ted_news)
+    RecyclerView rvTedNews;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     TedNewsAdapter adapter;
 
@@ -32,16 +45,15 @@ public class MainActivity extends BaseActivity implements TedNewsDelegate{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar =  findViewById(R.id.main_toolbar);
+        ButterKnife.bind(this,this);
+
         setSupportActionBar(toolbar);
 
-        RecyclerView rvTedNews=findViewById(R.id.rv_ted_news);
         adapter=new TedNewsAdapter(this);
         rvTedNews.setAdapter(adapter);
         rvTedNews.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +102,7 @@ public class MainActivity extends BaseActivity implements TedNewsDelegate{
     @Override
     public void onTapTedTalks(TedTalksVO tedTalks) {
         Intent intent=new Intent(getApplicationContext(),TedNewsDetailActivity.class);
-        intent.putExtra("TalkId",String.valueOf(tedTalks.getTalkId()));
+        intent.putExtra(TedTalksConstants.TALK_ID,tedTalks.getTalkId());
         startActivity(intent);
     }
 

@@ -17,6 +17,7 @@ import com.padcmyanmar.ted_talks_app_assignment_pkk.R;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.adapters.TedNewsMoreAdapter;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.data.models.TedTalksModel;
 import com.padcmyanmar.ted_talks_app_assignment_pkk.data.vos.TedTalksVO;
+import com.padcmyanmar.ted_talks_app_assignment_pkk.utils.TedTalksConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,20 +52,22 @@ public class TedNewsDetailActivity extends BaseActivity {
     @BindView(R.id.tv_ted_details_speaker_desc)
     TextView tvDetailsSpeakerDesc;
 
+    @BindView(R.id.rv_ted_news_more)
+    RecyclerView rvTedNewsMore;
+
+    @BindView(R.id.details_toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ted_news_detail);
         ButterKnife.bind(this,this);
 
-        Toolbar toolbar=findViewById(R.id.details_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int talkId=Integer.parseInt(getIntent().getStringExtra("TalkId"));
-
-        TedTalksVO talksVO=TedTalksModel.getMtalksInstance().getTedTalksById(talkId);
-        bindData(talksVO);
+        int talkId= getIntent().getIntExtra(TedTalksConstants.TALK_ID,0);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -73,11 +76,12 @@ public class TedNewsDetailActivity extends BaseActivity {
                 TedNewsDetailActivity.super.onBackPressed();
             }
         });
-
-        RecyclerView rvTedNewsMore=findViewById(R.id.rv_ted_news_more);
         TedNewsMoreAdapter adapter=new TedNewsMoreAdapter();
         rvTedNewsMore.setAdapter(adapter);
         rvTedNewsMore.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
+
+        TedTalksVO talksVO=TedTalksModel.getMtalksInstance().getTedTalksById(talkId);
+        bindData(talksVO);
     }
 
     public void bindData(TedTalksVO tedTalks){

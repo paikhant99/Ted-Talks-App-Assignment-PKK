@@ -48,7 +48,7 @@ public class TedTalksVO {
     }
 
     public String getDurationInSec() {
-        return durationInSec;
+        return String.format("%02d:%02d", Integer.parseInt(durationInSec) / 60, Integer.parseInt(durationInSec) % 60);
     }
 
     public String getDescription() {
